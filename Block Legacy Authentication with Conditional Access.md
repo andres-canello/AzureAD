@@ -1,4 +1,4 @@
-#Block Legacy Authentication with Conditional Access
+# Block Legacy Authentication with Conditional Access
 
 Great news! Conditional Access in Azure AD now includes the ability to block Legacy Authentication! Wait, what's wrong with Legacy Authentication? Read on.
 
@@ -6,7 +6,7 @@ What is Legacy Authentication? Generally speaking, this means protocols that use
 
 Examples of protocols that use Legacy Authentication are: POP3, IMAP4, SMTP, etc. There are other protocols that can do Basic Auth and Modern Auth, examples are MAPI, EWS, etc.
 
-So, what's the problem?
+## So, what's the problem?
 Single factor authentication (i.e.: username and password) is not enough these days. Passwords are bad as they are easy to guess and we (humans) are bad at choosing good passwords and tend to just give them to attackers (phishing anyone?). One of the easiest things that can be done to protect against password threats is implementing multi-factor authentication (MFA). So even if an attacker gets in possession of a user's password, the password alone is not sufficient to successfully authenticate and access the data.
 
 The problem then is what to do with protocols using Legacy Authentication. The recommendation is to just block these protocols or, if you must use them, allow them only for certain users and specific network locations.
@@ -17,7 +17,7 @@ In Federated environments (i.e.: using AD FS), you could use claim rules to allo
 Enforcing MFA per-user, the effect of this is that users are then forced to use App Passwords for Legacy Auth protocols, however if you disallow its use, you effectively block these protocols. The bad news here is that you can't use any kind of conditions, it's all or nothing.
 Another way to block Legacy Auth is doing it server-side (vs at the Identity Provider). For example in Exchange Online, you could disable POP3 or IMAP for the user. There are 2 problems with this, first is that you can't do this for all your users, this is done per-user. Second is that you don't want to block protocols that can do Legacy and Modern Auth (i.e.: EWS, MAPI) as you most likely still need them. There is no way to only block Legacy Auth for those protocols. (spoiler alert: for now)
 
-What's new in Azure AD to help me with this?
+## What's new in Azure AD to help me with this?
 Glad you ask. This month (May 2018) we released 2 new functionalities to help you with this:
 
 Better sign-in logging: now is faster, gives you more info (Conditional Access evaluation!), device info, and the type of client/protocol/authentication being used. More info here.
@@ -38,7 +38,7 @@ The possible values are: IMAP, MAPI, Older Office Clients (the ones that rely on
 
 Use this info to understand what clients/protocols are being used in your organisation, who are the users, and where they are connecting from. If you mostly see Office clients and you have Office 2013 or above, make sure you enable Modern Authentication for them. Here is more info.
 
-Block Legacy Authentication clients with Conditional Access
+## Block Legacy Authentication clients with Conditional Access
 Conditional Access now has a new Client App called "Other Clients", this represent Legacy Auth clients (there is a separate client type for Exchange ActiveSync, this is ActiveSync/BasicAuth, clients that support ActiveSync/ModernAuth will fall in the Mobile Apps and Desktop Clients category).
 
 Here is how the new Client Apps condition looks like:
@@ -48,7 +48,7 @@ Any condition can be used to narrow the scope of the policies, so make sure you 
 
 Any control can be applied to these clients, however, all of them will lead to block as no other controls can be applied to this protocols.
 
-A final note on what you are protecting with this
+## A final note on what you are protecting with this
 By implementing the above policy, you are protecting your data from being accessed with single factor authentication if an attacker happens to guess a user's password.
 
 There are protections in Azure AD to prevent attackers from trying large numbers of passwords for your users. Ultimately these are throttling mechanisms, so attackers will be less likely to guess passwords (specially if you ban common passwords! read this for more info).
