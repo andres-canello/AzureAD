@@ -20,8 +20,8 @@ Another way to block Legacy Auth is doing it server-side (vs at the Identity Pro
 ## What's new in Azure AD to help me with this?
 Glad you ask. This month (May 2018) we released 2 new functionalities to help you with this:
 
-Better sign-in logging: now is faster, gives you more info (Conditional Access evaluation!), device info, and the type of client/protocol/authentication being used. More info here.
-The ability to use Conditional Access to block Legacy Authentication clients. More info here.
+- Better sign-in logging: now is faster, gives you more info (Conditional Access evaluation!), device info, and the type of client/protocol/authentication being used. More info [here] (https://docs.microsoft.com/en-us/azure/active-directory/whats-new#view-legacy-authentications-through-sign-ins-activity-logs).
+- The ability to use Conditional Access to block Legacy Authentication clients. More info [here] (https://docs.microsoft.com/en-us/azure/active-directory/active-directory-conditional-access-conditions#legacy-authentication).
 So, you are telling me that the CA policy I have that requires MFA for all apps and users if they are outside the network is not protecting clients using Legacy Authentication? Yep.
 
 Conditional Access only works with Modern Authentication protocols, this includes all browser-based flows, clients that use Open ID Connect or OAuth, and Exchange ActiveSync, which largely all clients support only with Basic Auth (IOS 11 mail client supports Modern Auth). This was, until now.
@@ -29,9 +29,9 @@ Conditional Access only works with Modern Authentication protocols, this include
 Discover what Legacy Authentication protocols/clients are being used across the organisation
 For doing this, you will rely on the new Azure AD Sign-in logs.
 
-Go to the Azure Portal, Azure Active Directory and open the Sign-ins blade.
-Click Columns and select Client App from the list.
-Here is an example, please note that this works for domains using Federation or Cloud Authentication (Cloud ID, Pass-through Authentication or Password Hash Sync).\
+- Go to the Azure Portal, Azure Active Directory and open the Sign-ins blade.
+- Click Columns and select Client App from the list.
+- Here is an example, please note that this works for domains using Federation or Cloud Authentication (Cloud ID, Pass-through Authentication or Password Hash Sync).\
 
 
 The possible values are: IMAP, MAPI, Older Office Clients (the ones that rely on the Sign In Assistant), POP and SMTP. There is also an Other Clients category, which is a catch-all for everything else.
