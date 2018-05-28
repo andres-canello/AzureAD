@@ -13,8 +13,8 @@ The problem then is what to do with protocols using Legacy Authentication. The r
 
 Until now, there were 2 ways of blocking Legacy Authentication in Azure AD:
 
-In Federated environments (i.e.: using AD FS), you could use claim rules to allow certain protocols and deny access to the rest. This gets messy when you need to start adding conditions and exception.
-Enforcing MFA per-user, the effect of this is that users are then forced to use App Passwords for Legacy Auth protocols, however if you disallow its use, you effectively block these protocols. The bad news here is that you can't use any kind of conditions, it's all or nothing.
+- In Federated environments (i.e.: using AD FS), you could use claim rules to allow certain protocols and deny access to the rest. This gets messy when you need to start adding conditions and exception.
+- Enforcing MFA per-user, the effect of this is that users are then forced to use App Passwords for Legacy Auth protocols, however if you disallow its use, you effectively block these protocols. The bad news here is that you can't use any kind of conditions, it's all or nothing.
 Another way to block Legacy Auth is doing it server-side (vs at the Identity Provider). For example in Exchange Online, you could disable POP3 or IMAP for the user. There are 2 problems with this, first is that you can't do this for all your users, this is done per-user. Second is that you don't want to block protocols that can do Legacy and Modern Auth (i.e.: EWS, MAPI) as you most likely still need them. There is no way to only block Legacy Auth for those protocols. (spoiler alert: for now)
 
 ## What's new in Azure AD to help me with this?
@@ -31,8 +31,7 @@ For doing this, you will rely on the new Azure AD Sign-in logs.
 
 - Go to the Azure Portal, Azure Active Directory and open the Sign-ins blade.
 - Click Columns and select Client App from the list.
-- Here is an example, please note that this works for domains using Federation or Cloud Authentication (Cloud ID, Pass-through Authentication or Password Hash Sync).\
-
+- Please note that this works for domains using Federation or Cloud Authentication (Cloud ID, Pass-through Authentication or Password Hash Sync).\
 
 The possible values are: IMAP, MAPI, Older Office Clients (the ones that rely on the Sign In Assistant), POP and SMTP. There is also an Other Clients category, which is a catch-all for everything else.
 
@@ -40,9 +39,6 @@ Use this info to understand what clients/protocols are being used in your organi
 
 ## Block Legacy Authentication clients with Conditional Access
 Conditional Access now has a new Client App called "Other Clients", this represent Legacy Auth clients (there is a separate client type for Exchange ActiveSync, this is ActiveSync/BasicAuth, clients that support ActiveSync/ModernAuth will fall in the Mobile Apps and Desktop Clients category).
-
-Here is how the new Client Apps condition looks like:
-
 
 Any condition can be used to narrow the scope of the policies, so make sure you target only a few test users before deploying it broadly. If you still have users using Legacy Auth clients, a first good step would be to allow these clients only from known locations. This will stop attackers from accessing your data if they happen to obtain a user's password.
 
