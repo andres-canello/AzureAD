@@ -1,3 +1,5 @@
+#Block Legacy Authentication with Conditional Access
+
 Great news! Conditional Access in Azure AD now includes the ability to block Legacy Authentication! Wait, what's wrong with Legacy Authentication? Read on.
 
 What is Legacy Authentication? Generally speaking, this means protocols that use Basic Authentication and typically cannot enforce any type of second factor authentication. On the other hand, Modern Authentication can do second factor authentication, typically, this means that the app can pop up a browser frame so the user can perform whatever is required as second factor. This can be entering a one-time code, approve a push notification on the phone, or answering a phone call.
