@@ -27,7 +27,7 @@ $Results=@()
 $ExportCSVReport=".\MFAReport_$((Get-Date -format yyyy-MMM-dd-ddd` hh-mm` tt).ToString()).csv" 
  
  
-$allUsers = Get-MsolUser -searchstring MFA
+$allUsers = Get-MsolUser -All
 
 $allUsers | ForEach-Object {
 
